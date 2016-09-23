@@ -14,7 +14,7 @@ def send_query(query, conn):
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((conn['host'], int(conn['port'])))
-        send_msg = (command).encode()
+        send_msg = (command)
         sock.send(send_msg)
 
         data = ''
@@ -33,7 +33,7 @@ def send_query(query, conn):
     except (socket.error,socket.gaierror) as err_msg:
         pass
 
-    return ret.decode()
+    return ret
 
 # grepper class that handles both query and connections
 class grepper:

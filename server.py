@@ -28,11 +28,11 @@ def send_recv_data(peer_socket,bytes_to_receive):
             decoded_msg = ''
             if rcvd_msg.strip():
                 logging.info("Received valid message")
-                decoded_msg = decoded_msg + rcvd_msg.decode() 
+                decoded_msg = decoded_msg + rcvd_msg
                 logging.info("Unix command: " + decoded_msg)
                 try:
                     cmd_outp = subprocess.check_output(decoded_msg,shell=True)
-                    cmd_outp = cmd_outp + b'CMD_END'
+                    cmd_outp = cmd_outp + 'CMD_END'
                     logging.info("Sending Output of CMD\n")
                     conn_socket.sendall(cmd_outp)
                     logging.info("Finished Sending Result\n")
