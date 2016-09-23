@@ -39,7 +39,7 @@ def send_recv_data(peer_socket,bytes_to_receive):
                 except subprocess.CalledProcessError as err_msg:
                     logging.error("Command Failed to execute")
                     logging.exception(err_msg)
-                    conn_socket.sendall(b'CMD_FAIL_FROM_REMOTE'+b'CMD_END')
+                    conn_socket.sendall('CMD_FAIL_FROM_REMOTE'+'CMD_END')
                         
                 
         logging.info("Server loop exited")    

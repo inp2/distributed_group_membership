@@ -10,22 +10,22 @@ import time
 def send_query(query, conn):
     command = query
     host = conn['host']
-    ret = b''
+    ret = ''
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((conn['host'], int(conn['port'])))
         send_msg = (command).encode()
         sock.send(send_msg)
 
-        data = b''
+        data = ''
         try:
             while True:
                 buf = sock.recv(8192)
                 data = data + buf
-                if(data.find(b'CMD_END') != -1):
+                if(data.find('CMD_END') != -1):
                     break
-            if(data.find(b'CMD_FAIL_FROM_REMOTE') == -1):
-                ret = data.strip(b'CMD_END')
+            if(data.find('CMD_FAIL_FROM_REMOTE') == -1):
+                ret = data.strip('CMD_END')
 
         except socket.timeout:
             pass
@@ -66,11 +66,11 @@ def output_results(conns, results):
     for i in range(len(conns)):
         lines = results[i].splitlines()
         for line in lines:
-            print('{0}: {1}'.format(conns[i]['host'], line))
+            print '{0}: {1}'.format(conns[i]['host'], line)
         lcount = len(lines)
         dist_lcount += lcount
-        print('line count [{0}]: {1}'.format(conns[i]['host'], lcount))
-    print('Distributed line count: {0}'.format(dist_lcount))
+        print 'line count [{0}]: {1}'.format(conns[i]['host'], lcount)
+    print 'Distributed line count: {0}'.format(dist_lcount)
 
 # Counts the total amount of lines
 def get_tcnt(results):
@@ -113,7 +113,7 @@ def main_sub(filename, query):
 # Receives command line arguments and calls main function
 def main():
     if len(sys.argv) < 3:
-        print('python client.py <filename> <grep arguments>')
+        print 'python client.py <filename> <grep arguments>'
         sys.exit(1)
     logging.info("Cmd line arguments\n")
     logging.info(sys.argv[2:])
