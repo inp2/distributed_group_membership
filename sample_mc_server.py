@@ -5,6 +5,7 @@ import sys
 def send_multicast_msg(x):
     multicast_identity = '224.6.45.85'
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     any_client = ('',10007)
     while True:
         

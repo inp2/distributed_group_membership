@@ -3,7 +3,7 @@ import struct
 import sys
 
 
-# Function establishes socket, sends grep command and returns result
+# Function establishes Multicast socket to send a simple message
 def send_multicast_msg(multicast_message):
     
     try:
