@@ -35,7 +35,14 @@ def conn_node(memblist):
             except (socket.error,socket.gaierror) as err_msg:
                 logging.error('Socket Error: ' + str(err_msg))
             sock.close()
-    
+
+def create_clist(memblist):
+    host_addr = [];
+    for name in memblist:
+        addr = socket.gethostbyname(name)
+        host_addr.append(addr)
+        logging.info(addr)
+    return host_addr
 
 def main():
     if len(sys.argv) < 2:
@@ -44,7 +51,8 @@ def main():
     filename = sys.argv[1]
     create_memlist(filename)
     memblist = create_memlist(filename)
-    conn_node(memblist)
+    clientlist = create_clist(memblist)
+    conn_node(clientlist)
 
 if __name__ == "__main__":
     logging.basicConfig(filename = "introducerdebug.log", level=logging.INFO,filemode = "w")
