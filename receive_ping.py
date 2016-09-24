@@ -17,7 +17,7 @@ def recv_ping():
             buf = ''
             while True:
                 buf, sender = sock.recvfrom(8192)
-                print 'Received from client %s from %s' % (buf,sender)
+                #print 'Received from client %s from %s' % (buf,sender)
                 sock.sendto('ack', sender)
         except (socket.error,socket.gaierror) as err_msg:   
             print err_msg 
