@@ -31,12 +31,12 @@ def update_buffer_list(func_identifier, address_id_list):
     global server_list
     global buffer_recent
     size = len(server_list)        
-    dissemination_cnt = math.ceil((math.log(size,2)))     
+    dissemination_cnt = int(math.ceil((math.log(size,2))))     
     for address_id in address_id_list:
         logging.info(func_identifier + ' Check Recent Buffer for ' + address_id)
         if address_id not in buffer_recent:
             buffer_recent[address_id] = dissemination_cnt
-            logging.info(func_identifier + ' Write to dictionary key ' + address_id +  ' value ' + dissemination_cnt )
+            logging.info(func_identifier + ' Write to dictionary key ' + address_id +  ' value ' + str(dissemination_cnt) )
     
 ###Dummy function until Imani integrates
 
@@ -140,7 +140,7 @@ def recv_ping(lock):
 ### Dummy function until Imani integrates
 def sample_clients():
     global server_list
-    host_names = [ 'fa16-cs425-g01-01.cs.illinois.edu', 'fa16-cs425-g01-02.cs.illinois.edu', 'fa16-cs425-g01-03.cs.illinois.edu' , 'fa16-cs425-g01-04.cs.illinois.edu']
+    host_names = [ 'fa16-cs425-g01-01.cs.illinois.edu', 'fa16-cs425-g01-02.cs.illinois.edu', 'fa16-cs425-g01-03.cs.illinois.edu' , 'fa16-cs425-g01-04.cs.illinois.edu', 'fa16-cs425-g01-05.cs.illinois.edu', 'fa16-cs425-g01-06.cs.illinois.edu', 'fa16-cs425-g01-07.cs.illinois.edu', 'fa16-cs425-g01-08.cs.illinois.edu']
     
     #host_names = [ 'fa16-cs425-g01-01.cs.illinois.edu', 'fa16-cs425-g01-02.cs.illinois.edu']
     host_addr = [];
@@ -161,7 +161,7 @@ def main_sub():
         recv_thread = threading.Thread(target=recv_ping,args=(lock,))
         recv_thread.daemon = True
         recv_thread.start()     
-        time.sleep(10)    
+        time.sleep(60)    
         ping_thread = threading.Thread(target=send_ping,args=(lock,))
         ping_thread.daemon = True
         ping_thread.start() 
