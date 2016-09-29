@@ -67,7 +67,7 @@ def send_ping(lock):
     global server_list
     while True:
     
-         
+        
         random.shuffle(server_list)    
         ###Update membership list here
         ###Dummy code until Imani integrates membership list updation routine
@@ -75,15 +75,19 @@ def send_ping(lock):
         update_server_list()
         lock.release() 
         for address in server_list:
+            fail_indicator = False 
             fail_address = '01_' + address
             ## Do not send pings to already fail node 
             lock.acquire()
             if fail_address in buffer_recent:
-                continue
-            lock.release()    
+                fail_indicator = True
+            lock.release()
+            if fail_indicator == True:
+                continue  
+                  
             try:
                 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                sock.settimeout(0.250) 
+                sock.settimeout(0.120) 
                 lock.acquire()                
                 ping_message = form_piggyback_packet('send_ping', 'p') 
                 lock.release()                                 
