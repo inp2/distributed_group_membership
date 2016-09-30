@@ -65,6 +65,12 @@ class FailureDetector:
             lock.acquire()
             self.update_server_list()
             lock.release() 
+            size_mlist = len(self.server_list)
+            if size_mlist > 0:
+                swim_timeout =  2.8/(2*size_mlist - 1)
+            else: 
+                swim_timeout = 0.120
+            #logging.info('SWIM timeout = ' + str(swim_timeout))
             for address in self.server_list:
                 fail_indicator = False 
                 fail_address = '01_' + address
@@ -78,7 +84,7 @@ class FailureDetector:
                       
                 try:
                     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                    sock.settimeout(0.120) 
+                    sock.settimeout(swim_timeout) 
                     lock.acquire()                
                     ping_message = self.form_piggyback_packet('send_ping', 'p') 
                     lock.release()                                 
@@ -86,13 +92,13 @@ class FailureDetector:
                     data = ''
                     try:                                            
                         ret_buf, server_identity = sock.recvfrom(8192)
-                        #print 'Received ACK from server: %s from %s' %(ret_buf,server_identity)   
+                           
                     except socket.timeout:
                         logging.info('ACK not received within timeout from node : ' + address)
                         address_id = []
                         address_id.append('01_' + address)
                         lock.acquire() 
-                        #logging.info('Update recent buffer from send_ping')                   
+                        #logging.info('Update recent buffer from send_ping')                                          
                         self.update_buffer_list('send_ping', address_id)      
                         lock.release()                    
                 except (socket.error,socket.gaierror) as err_msg:
@@ -121,6 +127,9 @@ class FailureDetector:
                     sock.sendto(ack_message, sender)
                     data = buf.split(',')    
                     lock.acquire() 
+                    #If ping was received from node not in mmebership list, add it to buffer_list
+                    if sender[0] not in self.server_list:
+                       data.append('10_' + sender[0])
                     self.update_buffer_list('recv_ping', data[1:len(data)-1]) 
                     lock.release()                
             except (socket.error,socket.gaierror) as err_msg:   
