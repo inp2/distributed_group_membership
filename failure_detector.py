@@ -16,7 +16,7 @@ class FailureDetector:
     def form_piggyback_packet(self,func_identifier,msg_type):
         msg_formed = msg_type    
         for key,val in  self.buffer_recent.items():
-            logging.info(func_identifier + ' Reading key from dictionary ' + key)
+            #logging.info(func_identifier + ' Reading key from dictionary ' + key)
             if val > 0:
                new_val = val - 1
                msg_formed = msg_formed + ',' + key 
@@ -130,6 +130,7 @@ class FailureDetector:
                     #If ping was received from node not in mmebership list, add it to buffer_list
                     if sender[0] not in self.server_list:
                        data.append('10_' + sender[0])
+                    #logging.info('recv_ping_debug_statement ' + str(sender[0]))
                     self.update_buffer_list('recv_ping', data[1:len(data)-1]) 
                     lock.release()                
             except (socket.error,socket.gaierror) as err_msg:   
