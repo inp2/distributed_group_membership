@@ -53,6 +53,13 @@ class console_client(threading.Thread):
                 self.leave_group()
             elif cmd == 'ls':
                 print self.mlist
+            elif cmd == 'li':
+                if self.mlist.lst:
+                    for item in self.mlist.lst:
+                        if item['host'] == socket.gethostbyname(socket.gethostname()):
+                            print item
+                else:
+                    print "ID not created until 'join'"
             elif cmd == 'exit':
                 import os
                 os._exit(0)
