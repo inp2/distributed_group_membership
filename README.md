@@ -13,7 +13,7 @@ A machine failure must be reflected in at least one membership lists within 3 se
 
 ## Requirements
 
-python3.5
+python2.7
 
 ## Message Format
 
@@ -25,6 +25,13 @@ Make your logs are verbose as possible. At least you must log:
 
 ## File List
 
-## Basic Code
+## Commands
+
+ls - list the membership list
+li - list self's id
+join - join the group
+leave - voluntarily leave the group
+
+
 
 ## Code Example
