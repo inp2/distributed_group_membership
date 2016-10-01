@@ -51,8 +51,8 @@ def read_servers(filename):
     with open(filename, 'r') as my_file:
         for line in my_file:
             line = line.strip('\n')
-            conn = line.split(',')
-            host = conn[0]
+            # conn = line.split(',')
+            host = line
             port = '10005'
             dict = {"host": host, "port": port}
             connections.append(dict)
