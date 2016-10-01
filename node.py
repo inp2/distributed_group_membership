@@ -12,7 +12,7 @@ class member_list:
         self.lst = []
         self.timestamps = []
         self.lock = threading.Lock()
-        self.ihost = '127.0.0.1'
+        self.ihost = socket.gethostbyname(socket.gethostname())
         self.iport = 10011
 
     def init(self, lst, ts):
