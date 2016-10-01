@@ -7,11 +7,13 @@ This service maintains at each machine in the system, a list of the other machin
 * A machine voluntarily leaves the group
 * A machine crashes from the group
 
+A machine failure must be reflected in at least one membership lists within 3 seconds called time-bounded completeness, and it must be provided no matter what the network latencies are. A machine failure, join or leave must be reflected within 6 seconds at all membership lists.
+
 ## Motivation
 
 ## Requirements
 
-python2.7
+python3.5
 
 ## Message Format
 
@@ -26,18 +28,3 @@ Make your logs are verbose as possible. At least you must log:
 ## Basic Code
 
 ## Code Example
-
-### Start Introducer Node
-
-python intro.py
-
-### Start Nodes
-
-python console.py
-
-### Run Basic Command-line Commands
-id - List the node's id
-ls - List the membership list
-join - Join the cluster
-leave - Voluntarly leave the cluster
-exit - Exit the program

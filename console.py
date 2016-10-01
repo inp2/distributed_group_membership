@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from node import *
 
 class console_client(threading.Thread):
@@ -34,12 +36,13 @@ class console_client(threading.Thread):
             'port': self.port
         }
         snd_msg = pickle.dumps(msg)
-        self.sock.sendto(snd_msg + 'CMD_END', (self.mlist.ihost,self.mlist.iport))
+        broadcast(self.mlist, self.host, self.port, snd_msg)
+        self.mlist.remove({'host': self.host, 'port': self.port})
         logging.info("Node Command: " + msg['cmd'])
 
 
     def run(self):
-        prompt = ':) '
+        prompt = '()==[:::::::::::::> '
         if self.intro:
             prompt = '[intro] ' + prompt
         while True:
