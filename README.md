@@ -28,9 +28,14 @@ Make your logs are verbose as possible. At least you must log:
 ## Commands
 
 ls - list the membership list
+
 li - list self's id
+
 join - join the group
+
 leave - voluntarily leave the group
+
+exit - exit program
 
 
 
