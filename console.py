@@ -65,8 +65,8 @@ if __name__ == '__main__':
     logging.basicConfig(filename="node.log", level=logging.INFO, filemode="w")
     host = socket.gethostbyname(socket.gethostname())
     port = 10013
-    if len(sys.argv) == 2:
-        port = int(sys.argv[1])
+    # if len(sys.argv) == 2:
+        # port = int(sys.argv[1])
     mlist = member_list()
     cc = console_client(mlist, host, port)
     cc.start()
