@@ -47,9 +47,7 @@ li - list self's id
 
 join - join the group
 
-leave - voluntarily leave the group
-
-exit - exit program
+exit - voluntarily leave the group
 
 ## Code Example
 
