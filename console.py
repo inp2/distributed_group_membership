@@ -36,9 +36,10 @@ class console_client(threading.Thread):
             'host': self.host,
             'port': self.port
         }
-        snd_msg = pickle.dumps(msg)
-        broadcast(self.mlist, self.host, self.port, snd_msg)
-        self.mlist.remove({'host': self.host, 'port': self.port})
+        # snd_msg = pickle.dumps(msg)
+        # broadcast(self.mlist, self.host, self.port, snd_msg)
+        # self.mlist.remove({'host': self.host, 'port': self.port})
+        self.mlist.leave()
         logging.info("Node Command: " + msg['cmd'])
 
 
@@ -50,10 +51,10 @@ class console_client(threading.Thread):
             cmd = raw_input(prompt)
             if cmd == 'join':
                 self.join_group()
-            elif cmd == 'leave':
-                self.leave_group()
             elif cmd == 'ls':
                 print self.mlist
+            elif cmd == 'li':
+                print socket.gethostbyname(socket.gethostname())
             elif cmd == 'exit':
                 import os
                 os._exit(0)

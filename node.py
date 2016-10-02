@@ -61,6 +61,6 @@ class drone(threading.Thread):
                 self.init_faildetect()
             elif rcv_msg['cmd'] == 'ping':
                 self.fail_detect.recv_ping(rcv_msg['data'], self.sock, addr,
-                                           '%s/%d/%s' %(rcv_msg['sender_host'],
-                                                        rcv_msg['sender_port'],
-                                                        rcv_msg['sender_timestamp']))
+                                               '%s/%d/%s' %(rcv_msg['sender_host'],
+                                                            rcv_msg['sender_port'],
+                                                            rcv_msg['sender_timestamp']))
