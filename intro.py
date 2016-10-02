@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from node import *
 from console import *
 

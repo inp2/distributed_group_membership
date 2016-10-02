@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from node import *
 
 class console_client(threading.Thread):
@@ -22,8 +24,9 @@ class console_client(threading.Thread):
             'port': self.port,
             'time': time.time()
         }
+        self.mlist.time = msg['time']
         snd_msg = pickle.dumps(msg)
-        self.sock.sendto(snd_msg + 'CMD_END', (self.mlist.ihost,self.mlist.iport))
+        self.sock.sendto(snd_msg, (self.mlist.ihost,self.mlist.iport))
         logging.info("Node Command: " + msg['cmd'])
 
 
@@ -34,12 +37,13 @@ class console_client(threading.Thread):
             'port': self.port
         }
         snd_msg = pickle.dumps(msg)
-        self.sock.sendto(snd_msg + 'CMD_END', (self.mlist.ihost,self.mlist.iport))
+        broadcast(self.mlist, self.host, self.port, snd_msg)
+        self.mlist.remove({'host': self.host, 'port': self.port})
         logging.info("Node Command: " + msg['cmd'])
 
 
     def run(self):
-        prompt = ':) '
+        prompt = '()==[:::::::::::::> '
         if self.intro:
             prompt = '[intro] ' + prompt
         while True:
@@ -60,7 +64,9 @@ class console_client(threading.Thread):
 if __name__ == '__main__':
     logging.basicConfig(filename="node.log", level=logging.INFO, filemode="w")
     host = socket.gethostbyname(socket.gethostname())
-    port = 10012
+    port = 10013
+    if len(sys.argv) == 2:
+        port = int(sys.argv[1])
     mlist = member_list()
     cc = console_client(mlist, host, port)
     cc.start()
