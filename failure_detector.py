@@ -41,7 +41,10 @@ class FailureDetector:
     ## Function to update the recently received buffer list
     def update_buffer_list(self,func_identifier, address_id_list):
         size = len(self.mlist.lst)
-        dissemination_cnt = int(math.ceil((math.log(size,2))))
+        if size >= 2:
+            dissemination_cnt = int(math.ceil((math.log(size,2))))
+        else:
+            dissemination_cnt = 1
         for address_id in address_id_list:
             logging.info(func_identifier + ' Check Recent Buffer for ' + address_id)
             if address_id not in self.buffer_recent:
